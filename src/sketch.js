@@ -1,15 +1,9 @@
 let targets = [];
 let walker;
 let counter = 1;
-let ww;
-let wh;
-
-let size = 25;
 
 function setup()
 {
-  ww = 800;
-  wh = 600;
   createCanvas(ww, wh);
   
   walker = new Walker(windowWidth / 2, windowHeight / 2);
@@ -37,8 +31,8 @@ function draw()
 
 function add_target(x, y)
 {
-  if(x == -1) { x = random(size / 2, ww - (size / 2)); }
-  if(y == -1) { y = random(size / 2, wh - (size / 2)); }
+  if(x == -1) { x = random(target_size / 2, ww - (target_size / 2)); }
+  if(y == -1) { y = random(target_size / 2, wh - (target_size / 2)); }
   
   let t = new Target(x, y, counter);
   

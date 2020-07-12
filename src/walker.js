@@ -4,15 +4,8 @@ class Walker
   {
     this.pos = createVector(x, y);
     this.target = null;
-    
     this.speed = 0;
-    this.speedMultiplier = 2.0;
-    this.maxSpeed = 20;
-    
     this.history = [];
-    this.historyMax = 25;
-    
-    this.newTargets = [1, 3];
   }
   
   draw()
@@ -53,14 +46,14 @@ class Walker
     push();
     stroke(50);
     fill(255, 0, 0);
-    ellipse(this.pos.x, this.pos.y, size * 1.5);
+    ellipse(this.pos.x, this.pos.y, target_size * 1.5);
     pop();
     
     push();
     noStroke();
     fill(255);
     textSize(10);
-    text(`Speed: ${int(this.speed)} (max: ${this.maxSpeed})`, 0, 10);
+    text(`Speed: ${int(this.speed)} (max: ${this.walker_max_speed})`, 0, 10);
     text(`Target: ${this.target ? this.target.n : "-"}`, 0, 20);
     pop();
     
@@ -78,13 +71,13 @@ class Walker
     let tpos = this.target.pos;
     let dst = dist(tpos.x, tpos.y, this.pos.x, this.pos.y);
 
-    if(dst <= size)
+    if(dst <= target_size)
     {
       let data = [tpos, [random(255), random(255), random(255)]];
       
       this.history.push(data);
 
-      if(this.history.length > this.historyMax)
+      if(this.history.length > walker_history)
       {
         this.history.shift();
       }
@@ -107,11 +100,11 @@ class Walker
     let d = dist(tp.x, tp.y, sp.x, sp.y);
     let s = map(d, 25, 0, 3.5, 1.0);
     
-    this.speed = s * this.speedMultiplier;
+    this.speed = s * this.walker_speed_multiplier;
     
-    if(this.speed > this.maxSpeed)
+    if(this.speed > this.walker_max_speed)
     {
-      this.speed = this.maxSpeed;
+      this.speed = this.walker_max_speed;
     }
     
     t.sub(sp);
@@ -130,7 +123,7 @@ class Walker
     
     if(targets.length == 0)
     {
-      let amt = random(this.newTargets[0], this.newTargets[1]);
+      let amt = random(this.walker_new_targets[0], this.walker_new_targets[1]);
       
       for(let i = 0; i < amt; i++)
       {
